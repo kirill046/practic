@@ -38,17 +38,26 @@ function images(){
 }
 
 function scripts(){
-    return src([
-        'node_modules/jquery/dist/jquery.js',
-        'app/js/main.js'
-    ])
+    return src('app/js/main.js')
         .pipe(concat('main.min.js'))
         .pipe(uglify())
         .pipe(dest('app/js'))
         .pipe(browserSync.stream())
 }
 
-function styles() {
+function scripts_libs(){
+    return src([
+        'node_modules/jquery/dist/jquery.js',
+        'node_modules/slick-carousel/slick/slick.js',
+        'node_modules/magnific-popup/dist/jquery.magnific-popup.js'
+    ])
+        .pipe(concat('libs.min.js'))
+        .pipe(uglify())
+        .pipe(dest('app/js'))
+        .pipe(browserSync.stream())
+}
+
+function sass() {
     return src('app/scss/style.scss')
         .pipe(scss({outputStyle: 'compressed'}))
         .pipe(concat('style.min.css'))
@@ -59,6 +68,17 @@ function styles() {
         .pipe(dest('app/css'))
         .pipe(browserSync.stream())
 }
+
+function styles() {
+    return src(['node_modules/normalize.css/normalize.css',
+                'node_modules/slick-carousel/slick/slick.css',
+                'node_modules/magnific-popup/dist/magnific-popup.css'])
+        .pipe(scss({outputStyle: 'compressed'}))
+        .pipe(concat('libs.min.css'))
+        .pipe(dest('app/css'))
+        .pipe(browserSync.stream())
+}
+
 
 
 function build () {
@@ -72,7 +92,7 @@ function build () {
 }
 
 function watching(){
-    watch(['app/scss/**/*.scss'], styles);
+    watch(['app/scss/**/*.scss'], sass);
     watch(['app/js/**/*.js','!app/js/main.min.js'], scripts);
     watch(['app/*.html']).on('change', browserSync.reload);
 }
@@ -80,13 +100,15 @@ function watching(){
 
 
 
-exports.styles = styles;
+exports.sass = sass;
 exports.watching = watching;
 exports.browsersync = browsersync;
 exports.scripts = scripts;
 exports.images = images;
 exports.cleanDist = cleanDist;
+exports.styles = styles;
+exports.scripts_libs = scripts_libs;
 
 
 exports.build = series(cleanDist, images, build);
-exports.default = parallel(styles, scripts, browsersync, watching);
+exports.default = parallel(styles,sass, scripts, scripts_libs, browsersync, watching);
