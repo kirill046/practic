@@ -1,0 +1,66 @@
+@import 'vars';
+@import 'global';
+
+
+
+
+.header{
+    &__inner{
+        display:flex;
+        justify-content: space-between;
+        align-items: center;
+        height: 91px;
+    }
+    &__btn{
+        font-family: 'Roboto', sans-serif;
+        font-weight:400;
+        font-size:12px;
+        line-height: 24px;
+        color:#fff;
+        padding:9px;
+        width:72px;
+        text-align: center;
+        border-radius: 4px;
+    }
+    &__text{
+        font-family: 'Roboto', sans-serif;
+        font-weight:400;
+        font-size:15px;
+        line-height: 24px;
+        color:#546e7a;
+        margin-left:auto;
+        margin-right:52px;
+    }
+    &__nav{
+        background-color: #263238;
+    }
+    &__nav-inner li{
+        display:inline-block;
+        padding:14px 39px 16px 0;
+        
+    }
+    &__nav-inner a{
+        color:#fff;
+        font-family: 'Roboto', sans-serif;
+        font-weight:500;
+        font-size:14px;
+        line-height: 30px;
+    }
+
+.header__text a{
+    color:#546e7a;
+    span{
+        color:#e74c3c;
+    }
+}
+
+}
+.header__btn-login{
+    background-color:$green;
+    
+    
+}
+.header__btn-register{
+    background-color:$red;
+    margin-left:7px;
+}
